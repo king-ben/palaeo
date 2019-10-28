@@ -7,8 +7,8 @@ import beast.util.Randomizer;
 
 public class FossilSiteSamplingDate extends BEASTObject {
     
-    public Input<String> upperInput = new Input<>("upper", "Upper bound for the taxon sampling date");
-    public Input<String> lowerInput = new Input<>("lower", "Lower bound for the taxon sampling date");
+    public Input<String> upperInput = new Input<>("upper", "Upper bound for sampling date");
+    public Input<String> lowerInput = new Input<>("lower", "Lower bound for sampling date");
 
     private double upper, lower;
 

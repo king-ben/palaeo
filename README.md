@@ -25,5 +25,8 @@ The Java packages in the palaeo BEAST2 package are:
 * 'FossilSiteDateRandomWalker' - An operator that takes a list of taxa from a single site or layer, and a range of ages. All taxa in the taxon list will be assigned the same age with each move. Can take sampled ancestor or offset trees
 * 'RelativeFossilSiteDateRandomWalker' - An extension of FossilSiteDateRandomWalker that allows fossil sites to be ordered relative to each other, while having overlapping possible age ranges. This is useful where dates are only known for the top and bottom of a stratigraphic sequence, and fossils are known from multiple layers within this sequence. the 'taxonbelow' input is a taxon from an older layer, while the 'taxonabove' input is from a younger layer. This operator should always be used in reciprocal pairs i.e. a younger and an older fossil site with reciprocal 'taxonbelow' and 'taxonabove' inputs. Middle layers, when there is more than two, can have both inputs
 
+### `beast.evolution.tree`
+* 'FossilSiteSamplingDate' - Sampling dates, an input class for the operators. Same as SamplingDate but without the requirement of a taxon input
+
 ### `beast.math.distributions`
 * 'RelativeAgePrior' - An alternative method for ordering the ages of taxa. Takes a 'younger' and 'older' input. Use of RelativeFossilSiteDateRandomWalker is probably advised instead, as it runs faster and is more flexible

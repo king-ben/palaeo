@@ -14,10 +14,11 @@ import beast.util.Randomizer;
 @Description("Takes an input of taxa from the same fossil site and moves their height simultaneously to a random value within a given range")
 
 public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
-	// Input the tree
+	// Input an offset tree - optional for when the youngest tip ages are sampled
 	public Input<TreeWOffset> treeWOffsetInput =
             new Input<TreeWOffset>("treeWOffset", "Optional fully extinct tree", (TreeWOffset)null);
-	// The class SamplingDate already has a taxonset input
+	// The class TipDatesRandomWalker already has a taxonset input
+	// Input sampling age range
     public Input<List<FossilSiteSamplingDate>> samplingDatesInput = new Input<>("FossilSiteSamplingDates",
             "List of sampling dates", new ArrayList<FossilSiteSamplingDate>());
 
@@ -31,12 +32,7 @@ public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
         	combinedTree.setInputValue("tree", treeInput.get());
         	combinedTree.initAndValidate();
         }
-    	
-        //windowSize = windowSizeInput.get();
-        //useGaussian = useGaussianInput.get();
-        
-        if (m_taxonsetInput.get() != null) {
-            
+        if (m_taxonsetInput.get() != null) { 
         	// initially empty list for taxon names to be added to
             List<String> sTaxaNames = new ArrayList<String>();
             // Adds taxon names to the list
@@ -76,7 +72,6 @@ public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
         FossilSiteSamplingDate taxonSamplingDate = samplingDatesInput.get().get(0);
         double range = taxonSamplingDate.getUpper() - taxonSamplingDate.getLower();           
         proposedValue = taxonSamplingDate.getLower() + Randomizer.nextDouble() * range;
-        
         // Note that tips are also called nodes in this
         Node node;
         Node fake = null;
@@ -87,22 +82,24 @@ public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
         int i;
         for(i=0; i<taxonIndices.length; i++) {
         	node = tree.getNode(taxonIndices[i]);
+            // Complicated stuff if selected taxon is a sampled ancestor
         	if ((node).isDirectAncestor()) {
         		// fake stores the parent node of the sampled ancestor
         		fake = node.getParent();
         		// Lower is the height of the descendant node from sampled ancestor
         		lower = combinedTree.getHeightOfNode(getOtherChild(fake, node).getNr());
-        		// If the sampled ancestor is not at the root...
+        		// If the sampled ancestor is  at the root...
         		if (fake.getParent() != null) {
         			// The upper is the height of the parent
         			upper = combinedTree.getHeightOfNode(fake.getParent().getNr());
         			// If the sampled ancestor is at the root, then the upper value is unlimited
         		} else upper = Double.POSITIVE_INFINITY;
-        		// much easier if it is not a sampled ancestor
+        		// if it is not a sampled ancestor
         	} else {
         		lower = 0.0;
         		upper = combinedTree.getHeightOfNode(node.getParent().getNr());
         	}
+        	// The minimum upper and maximum lower across all the taxa are used
         	if(upper < minupper) {
         		minupper = upper;
         	}
@@ -115,7 +112,6 @@ public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
             return Double.NEGATIVE_INFINITY;
         }
         // Automatically rejected if new value is the same as the old one
-        // Come back to this
         double testheight;
         Node node2;
         node2 = tree.getNode(taxonIndices[0]);
@@ -124,21 +120,19 @@ public class FossilSiteDateRandomWalker extends TipDatesRandomWalker {
             // this saves calculating the posterior
             return Double.NEGATIVE_INFINITY;
         }
-        //If the selected taxon is a sampled ancestor, then the parent node is given the new value
         fake = null;
         i=0;
+        // Proposal is looped across all taxa in the list, instead of picking a random one
         for( i=0; i<taxonIndices.length; i++) {
         	node = tree.getNode(taxonIndices[i]);
         	if ((node).isDirectAncestor()) {
         		fake = node.getParent();
         	}
         	// if it is a sampled ancestor, also set the height of the parent node
-        	//setHeightOfNode is a method for the combinedTree object that sets the height of a selected node
-            //loop from 0 to length of the set of taxa from the randomly selected fossil site
-            // Note that this is also set for sampled ancestors (i.e. the node and the tip have to be moved)
         	if (fake != null) {
         		combinedTree.setHeightOfNode(fake.getNr(), proposedValue);
         	}
+        	// set the height of the tip
         	combinedTree.setHeightOfNode(node.getNr(), proposedValue);
         }
         return 0.0;

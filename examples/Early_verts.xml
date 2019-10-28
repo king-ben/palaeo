@@ -389,7 +389,7 @@ DATATYPE
 
 
 <!-- TIP DATES -->
-
+<!-- Starting tip dates require HEIGHTS not ages -->
 <trait id="tipDates" spec="beast.evolution.tree.TraitSet" traitname="date-backward" value='
 								Hemicyclaspis_murchisoni=131,
 								Zenaspis_salweyi=122,
@@ -598,6 +598,7 @@ DATATYPE
 				<parameter name="rho" id='rho' value="1.0" lower="0." upper = "1."/>
 				-->
                 <parameter name="removalProbability" id='r' value="0." lower="0." upper="1."/>
+                <!-- offset tree because this is a fully extinct tree in which the youngest taxa have variable ages -->
                 <treeWOffset id="offset_tree" spec="beast.evolution.tree.TreeWOffset" tree="@tree" offset="290.0"/>
 
             </distribution>
@@ -651,7 +652,6 @@ DATATYPE
                 <taxonset idref="gnathostomes_osteostracans"/>
             </distribution>
 						
-			<!-- RELATIVE AGE PRIORS -->
 			
 			
 		</distribution>
@@ -688,36 +688,37 @@ DATATYPE
 	
 	
     <!-- OPERATORS -->
-	
-	<operator id="originScaler" parameter="@origin" scaleFactor="0.75" spec="ScaleOperator" weight="5.0"/>
-	<operator id='birthRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="5." parameter="@birthRate"/>
-	<operator id='deathRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="5." parameter="@deathRate"/>
-	<operator id='samplingRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="10." parameter="@samplingRate"/>
-	<operator id="updownBirthdeathRate" spec="UpDownOperator" scaleFactor=".95" weight="10." up="@birthRate" down="@origin"/>
-	
-	
-	
-	<operator spec='LeafToSampledAncestorJump' weight="15." tree="@tree"/>
-    <operator spec='SAWilsonBalding' weight="5." tree="@tree"/>
-    <operator spec='SAExchange' isNarrow="false" weight="5." tree="@tree"/>
-    <operator spec='SAExchange' weight="25." tree="@tree"/>
-    <operator spec='SAUniform' weight="25." tree="@tree"/>
-    <operator id='treeScaler' spec='SAScaleOperator' scaleFactor=".95" weight="1.5" tree="@tree"/>
-    <operator id='rootScaler' spec='SAScaleOperator' scaleFactor=".95" weight="0.5" tree="@tree" rootOnly='true'/>
-	
-	
-	<operator id="ucldMeanScaler.c:matrix" parameter="@ucldMean" scaleFactor="2.5" spec="ScaleOperator" weight="3.0"/>
-	<operator id="ucldStdevScaler.c:matrix" parameter="@ucldStdev" scaleFactor="2.5" spec="ScaleOperator" weight="3.0"/>
-	<operator id="CategoriesRandomWalk" parameter="@rateCategories" spec="IntRandomWalkOperator" weight="50.0" windowSize="1"/>
-	<operator id="CategoriesSwapOperator" intparameter="@rateCategories" spec="SwapOperator" weight="50.0"/>
-	<operator id="CategoriesUniform" parameter="@rateCategories" spec="UniformOperator" weight="50.0"/>
-	<operator id="relaxedUpdownTree" spec="UpDownOperator" scaleFactor=".95" weight="15.0" up="@ucldMean" down="@tree"/>
-    <operator id="gammaShapeScaler" parameter="@morphGammaShape" scaleFactor="0.5" spec="ScaleOperator" weight="0.25"/>
+	<!-- all operators have been upweighted due to the large number of tip age operators -->
+	<operator id="originScaler" parameter="@origin" scaleFactor="0.75" spec="ScaleOperator" weight="1.0"/>
+	<operator id='birthRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="1." parameter="@birthRate"/>
+	<operator id='deathRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="1." parameter="@deathRate"/>
+	<operator id='samplingRateOperator' spec='ScaleOperator' scaleFactor=".75" weight="2." parameter="@samplingRate"/>
+	<operator id="updownBirthdeathRate" spec="UpDownOperator" scaleFactor=".95" weight="2." up="@birthRate" down="@origin"/>
 	
 	
 	
+	<operator spec='LeafToSampledAncestorJump' weight="3." tree="@tree"/>
+    <operator spec='SAWilsonBalding' weight="1." tree="@tree"/>
+    <operator spec='SAExchange' isNarrow="false" weight="1." tree="@tree"/>
+    <operator spec='SAExchange' weight="5." tree="@tree"/>
+    <operator spec='SAUniform' weight="5." tree="@tree"/>
+    <operator id='treeScaler' spec='SAScaleOperator' scaleFactor=".95" weight="0.5" tree="@tree"/>
+    <operator id='rootScaler' spec='SAScaleOperator' scaleFactor=".95" weight="0.1" tree="@tree" rootOnly='true'/>
 	
-	<!-- Fossil sites with a single taxon in the analysis can be inlcuded in a single operator of the standard kind -->
+	
+	<operator id="ucldMeanScaler.c:matrix" parameter="@ucldMean" scaleFactor="0.5" spec="ScaleOperator" weight="3.0"/>
+	<operator id="ucldStdevScaler.c:matrix" parameter="@ucldStdev" scaleFactor="0.5" spec="ScaleOperator" weight="3.0"/>
+	<operator id="CategoriesRandomWalk" parameter="@rateCategories" spec="IntRandomWalkOperator" weight="10.0" windowSize="1"/>
+	<operator id="CategoriesSwapOperator" intparameter="@rateCategories" spec="SwapOperator" weight="10.0"/>
+	<operator id="CategoriesUniform" parameter="@rateCategories" spec="UniformOperator" weight="10.0"/>
+	<operator id="relaxedUpdownTree" spec="UpDownOperator" scaleFactor=".95" weight="3.0" up="@ucldMean" down="@tree"/>
+    <operator id="gammaShapeScaler" parameter="@morphGammaShape" scaleFactor="0.5" spec="ScaleOperator" weight="0.05"/>
+	
+	
+		
+	
+	
+	<!-- Fossil sites with a single taxon (in the analysis) can be inlcuded in a single operator of the standard kind -->
 	<operator spec='SampledNodeDateRandomWalker' windowSize="10"  tree="@tree" treeWOffset="@offset_tree" weight="10">
 		<taxonset spec="TaxonSet">
 			<taxon idref="Hemicyclaspis_murchisoni"/>
@@ -756,7 +757,6 @@ DATATYPE
 			<taxon idref="Nerepisacanthus_denisoni"/>
 		</taxonset>
 		<samplingDates id="Shropshire_Downtonian_age" taxon="@Hemicyclaspis_murchisoni" spec="beast.evolution.tree.SamplingDate" upper="133" lower="129.2"/>
-		
 		<!-- Not clear from literature which Wood Bay horizon Porolepis comes from, may be more than one -->
 		<samplingDates id="Wood_Bay_general_age" taxon="@Porolepis_sp" spec="beast.evolution.tree.SamplingDate" upper="410.8" lower="407.6"/>
 		<samplingDates id="Guodingshan_age" taxon="@Hanyangaspis_guodingshanensis" spec="beast.evolution.tree.SamplingDate" upper="438.5" lower="433.4"/>
@@ -840,7 +840,7 @@ DATATYPE
 			<taxon idref="Nectaspis_areolate"/>
 		</taxonset>
 		<!-- reference taxon from underlying layer, any one will do -->
-		<taxonabove idref="Sigaspis_lepidophora"/>
+		<taxonbelow idref="Sigaspis_lepidophora"/>
 		<FossilSiteSamplingDates id="Wood_Bay_assemblage_6_age" spec="beast.evolution.tree.FossilSiteSamplingDate" upper="410.8" lower="407.6"/>
 	</operator>
 	<!-- end Spitzbergen stratigraphy -->
@@ -851,7 +851,7 @@ DATATYPE
 			<taxon idref="Tremataspis_mammillata"/>
 			<taxon idref="Procephalaspis_oeselensis"/>
 		</taxonset>
-		<FossilSiteSamplingDates id="Saaremaa_age" spec="beast.evolution.tree.FossilSiteSamplingDate" upper="427.4" lower="410.8"/>
+		<FossilSiteSamplingDates id="Saaremaa_age" spec="beast.evolution.tree.FossilSiteSamplingDate" upper="427.4" lower="423"/>
 	</operator>
 	
 	<operator id="Escuminac" spec='FossilSiteDateRandomWalker' windowSize="10" tree="@tree" treeWOffset="@offset_tree" weight="1">
@@ -866,7 +866,7 @@ DATATYPE
 		<FossilSiteSamplingDates id="Escuminac_age" spec="beast.evolution.tree.FossilSiteSamplingDate" upper="382.7" lower="379.2"/>
 	</operator>
 	
-	<!-- Needs a relative age prior to ensure it is always older than the Xitun formation -->
+	<!-- Needs a relative age operator to ensure it is always older than the Xitun formation -->
 	<operator id="Xishancun" spec='RelativeFossilSiteDateRandomWalker' windowSize="10" tree="@tree" treeWOffset="@offset_tree" weight="1">
 		<taxonset spec="TaxonSet">
 			<taxon idref="Diandongpetalichthys_liaojiaoshanensis"/>
@@ -944,9 +944,7 @@ DATATYPE
 		</taxonset>
 		<FossilSiteSamplingDates id="Canowindra_age" spec="beast.evolution.tree.FossilSiteSamplingDate" upper="372.2" lower="358.9"/>
 	</operator>
-	
-	
-	
+
 	<operator id="Hunsrueck" spec='FossilSiteDateRandomWalker' windowSize="10" tree="@tree" treeWOffset="@offset_tree" weight="1">
 		<taxonset spec="TaxonSet">
 			<taxon idref="Lunaspis_broili"/>
@@ -1084,7 +1082,7 @@ DATATYPE
     </logger>
     
 
-    <logger id="screenlog" logEvery="10000" >
+    <logger id="screenlog" logEvery="100000" >
         <log idref="posterior"/>
         <log id="ESS.0" spec="util.ESS" arg="@posterior"/>
         <log idref="likelihood"/>

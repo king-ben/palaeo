@@ -1,0 +1,13 @@
+# Build output
+/out
+/bin
+/dist
+
+# mac hidden files
+.DS_store
+
+# Eclipse files
+.classpath
+.project
+/build
+/build-lib

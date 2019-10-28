@@ -4,7 +4,7 @@
 /dist
 
 # mac hidden files
-.DS_store
+.DS_Store
 
 # Eclipse files
 .classpath

@@ -19,10 +19,13 @@
     <property name="targetVersion" value="1.8"/>
 
     <!-- Directories necessary for all BEAST 2 packages -->
+    <!--
     <property name="doc" location="doc"/>
+    -->
     <property name="examples" location="examples"/>
+    <!--
     <property name="templates" location="templates"/>
-
+	-->
     <!-- BEAST branch and version to build against
          (only different for version tags because of
          a Github peculiarity) -->
@@ -312,7 +315,7 @@
 		<!--
         <copy file="README.md" tofile="${pack}/README" />
         -->
-        <copy file="COPYING" todir="${pack}" />
+        <copy file="LICENSE" todir="${pack}" />
         <copy todir="${pack}">
             <fileset dir="${lib}" includes="LICENSE*" />
         </copy>
@@ -321,7 +324,7 @@
         <copy todir="${pack}/examples">
             <fileset dir="${examples}" includes="**/*" />
         </copy>
-
+		<!--
         <mkdir dir="${templates}" />
         <copy todir="${pack}/templates">
             <fileset dir="${templates}" includes="*.xml" />
@@ -331,7 +334,7 @@
         <copy todir="${pack}/doc">
             <fileset dir="${doc}" includes="*.tex,*.doc,*.lyx,*.txt"/>
         </copy>
-
+		-->
         <copy file="version.xml" todir="${pack}" />
 
         <zip destfile="${dist}/${fullName}.zip" basedir="${pack}" />
@@ -411,15 +414,16 @@
             <equals arg1="${license}" arg2="apache2"/>
         </condition>
 
-        <get src="${licenseURL}" dest="COPYING"/>
+        <get src="${licenseURL}" dest="LICENSE"/>
 
         <mkdir dir="${src}"/>
         <mkdir dir="${test}"/>
         <mkdir dir="${lib}"/>
         <mkdir dir="${examples}"/>
+        <!--
         <mkdir dir="${templates}"/>
         <mkdir dir="${doc}"/>
-
+		-->
         <echo/>
         <echo>Done.</echo>
         <echo/>

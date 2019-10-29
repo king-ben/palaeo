@@ -3,12 +3,18 @@ BEAST2 tip-date operators for fossil sites and stratigraphic sequences.
 This [BEAST 2](http://www.beast2.org) package provides MCMC proposals for fossil sites, in particular it allows sampling of tip dates while keeping fossils from the same site at the same age. It also allows correct ordering of fossil sites within a sequence, while still allowing them to have overlapping age uncertainty ranges.
 
 
+Installing package manually
+---------------------------
+Ensure dependencies (beast2, BeastLabs and SA) are installed, at least beast2.v2.6.0 and SA.v2.0.2.
+Download the zip file from [releases](https://github.com/king-ben/palaeo/releases). Copy this zip file to the BEAST addon directory in your computer and unzip it. To find out where the addon directory is, open beauti, File - manage packages, click on the question mark in the bottom right corner. You may also need to clear the beast class path. This is possible in the file menu of beauti.
+
 Building package from source
 ----------------------------
 Ensure Apache Ant is installed.
 To build this package from source, download the source code and unzip the folder. In terminal, navigate to the archive and type "ant"
 This will create a "dist" folder inside the archive, within which is a zip file containing the package.
-Copy this zip file to the BEAST addon directory in your computer and unzip it. To find out where the addon directory is, open beauti, File - manage packages, click on the question mark in the bottom right corner. You may also need to clear the beast class path. This is possible in the file menu of beauti.
+Then install this folder manually as above.
+You may need to build the dependencies (beast2, BeastLabs and SA) from source first.
 
 Archive Contents
 ----------------

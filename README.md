@@ -24,8 +24,9 @@ Archive Contents
 * `/examples` : Example beast2 xml files
 * `/src` : source files. See below for details.
 * `version.xml` : BEAST package version file.
+* `/R_xml_tools` : An R function for producing xml blocks with operators from tables of fossil site occurences. Includes example templates
 
-The Java packages in the palaeo BEAST2 package are: 
+The Java packages in the palaeo BEAST2 package are:
 
 ### `beast.evolution.operators`
 * 'FossilSiteDateRandomWalker' - An operator that takes a list of taxa from a single site or layer, and a range of ages. All taxa in the taxon list will be assigned the same age with each move. Can take sampled ancestor or offset trees

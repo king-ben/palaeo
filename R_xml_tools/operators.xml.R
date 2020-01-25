@@ -86,7 +86,7 @@ operators.xml <- function(taxonfile, sitesfile, outputfile, treeid="tree", offse
 			xmlAttrs(taxonbelow) = c(idref=allsites[which(sitelist==as.character(sites$sitebelow[which(sites$site==sitelist[i])]))][[1]][1])
 		}
 		#make the FossilSiteSamplingDate xml node
-		dates <- newXMLNode("FossilSiteSamplingDate", parent=operator)
+		dates <- newXMLNode("FossilSiteSamplingDates", parent=operator)
 		#extract the upper and lower values
 		upper <- sites$upper[which(sites$site==sitelist[i])]
 		lower <- sites$lower[which(sites$site==sitelist[i])]

@@ -11,7 +11,7 @@ After the tables have been made, they should be saved as tab-delimited text file
 
 Generating the xml code
 -----------------------
-Now we will use R to generate the xml code for the operators on the age of each fossil site. You will need to install the R package **XML**. First, set a working directory that contains the **operators.xml.R** file which can be found [here](https://github.com/king-ben/palaeo/tree/master/R_xml_tools). Then you need to enter a few commands. In the example, the code is as follows:
+Now we will use R to generate the xml code for the operators on the age of each fossil site. You will need to install the R package **XML**. First, set a working directory that contains the two tables with the taxon and site information, and the **operators.xml.R** file which can be found [here](https://github.com/king-ben/palaeo/tree/master/R_xml_tools). Then you need to enter a few commands. In the example, the code is as follows:
 ```
 library(XML)
 source("operators.xml.R")

@@ -1,0 +1,28 @@
+[1] "mean range of estimated ages for MOTH taxa"
+[1] 6.552271
+
+[1] "mean range of estimated ages for Turin Hill taxa"
+[1] 5.430621
+
+[1] "median and hpd of MOTH mean from analysis using independent tip dates"
+[1] 414.5653
+[1] 412.9327 416.0638
+
+[1] "median and hpd of MOTH mean from analysis using linked tip dates"
+[1] 412.3584
+[1] 410.8021 415.5908
+
+[1] "median and hpd of Turin Hill mean from analysis using independent tip dates"
+[1] 415.4042
+[1] 413.4887 417.3611
+
+[1] "median and hpd of Turin Hill mean from analysis using linked tip dates"
+[1] 416.4703
+[1] 413.0644 419.1471
+
+[1] "posterior probability Turin Hill mean older than MOTH mean in analysis using independent tip dates"
+[1] 0.759578
+
+[1] "posterior probability Turin Hill older than MOTH in analysis using linked tip dates"
+[1] 0.9705719
+

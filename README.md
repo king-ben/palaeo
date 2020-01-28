@@ -2,7 +2,7 @@
 BEAST2 tip-date operators for fossil sites and stratigraphic sequences.
 This [BEAST 2](http://www.beast2.org) package provides MCMC proposals for fossil sites, in particular it allows sampling of tip dates while keeping fossils from the same site at the same age. It also allows correct ordering of fossil sites within a sequence, while still allowing them to have overlapping age uncertainty ranges.
 
-A tutorial for this package can be found [here](https://github.com/king-ben/palaeo/tree/master/tutorial)
+A tutorial for this package can be found [here](https://github.com/king-ben/palaeo/tree/master/tutorial).
 
 Installing package manually
 ---------------------------
@@ -27,6 +27,7 @@ Archive Contents
 * `version.xml` : BEAST package version file.
 * `/R_xml_tools` : An R function for producing xml blocks with operators from tables of fossil site occurences. Includes example templates
 * `/tutorial` : A tutorial for how to use this package.
+* `/results` : Analysis scripts and results for the manuscript describing the package.
 
 The Java packages in the palaeo BEAST2 package are:
 

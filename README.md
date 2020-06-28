@@ -2,6 +2,9 @@
 BEAST2 tip-date operators for fossil sites and stratigraphic sequences.
 This [BEAST 2](http://www.beast2.org) package provides MCMC proposals for fossil sites, in particular it allows sampling of tip dates while keeping fossils from the same site at the same age. It also allows correct ordering of fossil sites within a sequence, while still allowing them to have overlapping age uncertainty ranges.
 
+This package is associated with the following publication:
+King, B. and Rücklin, M. (2020). [Tip dating with fossil sites and stratigraphic sequences](https://peerj.com/articles/9368/). PeerJ 8:e9368.
+
 A tutorial for this package can be found [here](https://github.com/king-ben/palaeo/tree/master/tutorial).
 
 Installing package manually
